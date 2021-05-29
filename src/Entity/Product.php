@@ -3,23 +3,22 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
+ *     normalizationContext={"groups"={"product:read"}},
+ *     denormalizationContext={"groups"={"product:write"}},
  *     attributes={
  *          "pagination_items_per_page"=10,
  *          "formats"={"json"}
  *     },
  *     cacheHeaders={"max_age"=300, "shared_max_age"=300, "vary"={"Authorization", "Accept-Language"}}
  * )
- * @ApiFilter(NumericFilter::class, properties={"weather"})
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
@@ -38,6 +37,7 @@ class Product
      *     min=2,
      *     max=20
      * )
+     * @Groups({"product:read", "product:write"})
      */
     private $sku;
 
@@ -48,12 +48,14 @@ class Product
      *     min=10,
      *     max=255
      * )
+     * @Groups({"product:read", "product:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
+     * @Groups({"product:read", "product:write"})
      */
     private $price;
 
