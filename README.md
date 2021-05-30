@@ -38,7 +38,7 @@ The command will create empty database tables based on entities.
 
 Regenerate APP_SECRET variable:
 
-	php -r 'echo bin2hex(random_bytes(16));'
+	php -r "echo bin2hex(random_bytes(16));"
 
 Change to production environment:
 
