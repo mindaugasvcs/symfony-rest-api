@@ -24,6 +24,9 @@ class RecommendedProducts
      */
 	public $city;
 
+    /**
+     * @var array<\stdClass>
+     */
 	public $recommendations;
 
     public function __construct(string $city, array $recommendations)
